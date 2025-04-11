@@ -1,0 +1,327 @@
+{
+  "info": {
+    "_postman_id": "f2e8e3c5-4b1a-41db-8a4c-ca6a2d0e5f29",
+    "name": "Sistema Backend Operadora Internet",
+    "description": "Endpoints para o sistema de gestão de planos de operadoras de internet.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Status",
+      "item": [
+        {
+          "name": "Verificar Status da API",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/status",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["status"]
+            },
+            "description": "Verifica se a API está online"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Gestão de Clientes",
+      "item": [
+        {
+          "name": "Listar Clientes",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/gestao/clientes",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["gestao", "clientes"]
+            },
+            "description": "Lista todos os clientes cadastrados"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Gestão de Planos",
+      "item": [
+        {
+          "name": "Listar Planos",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/gestao/planos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["gestao", "planos"]
+            },
+            "description": "Lista todos os planos disponíveis"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Gestão de Assinaturas",
+      "item": [
+        {
+          "name": "Criar Assinatura",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:3000/gestao/assinaturas",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["gestao", "assinaturas"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"codPlano\": 1,\n    \"codCli\": 1,\n    \"descricao\": \"Assinatura de teste\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Cria uma nova assinatura (datas de fidelidade são calculadas automaticamente)"
+          },
+          "response": []
+        },
+        {
+          "name": "Criar Assinatura com Datas",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:3000/gestao/assinaturas",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["gestao", "assinaturas"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"codPlano\": 2,\n    \"codCli\": 2,\n    \"inicioFidelidade\": \"2023-01-01\",\n    \"fimFidelidade\": \"2024-01-01\",\n    \"custoFinal\": 89.90,\n    \"descricao\": \"Assinatura com datas personalizadas\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Cria uma nova assinatura com datas e custo personalizados"
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Assinaturas",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/gestao/assinaturas",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["gestao", "assinaturas"]
+            },
+            "description": "Lista todas as assinaturas cadastradas"
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar Assinatura por ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/gestao/assinaturas/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["gestao", "assinaturas", "1"]
+            },
+            "description": "Busca detalhes de uma assinatura específica"
+          },
+          "response": []
+        },
+        {
+          "name": "Renovar Assinatura",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "http://localhost:3000/gestao/assinaturas/1/renovar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["gestao", "assinaturas", "1", "renovar"]
+            },
+            "description": "Renova uma assinatura, atualizando as datas de fidelidade"
+          },
+          "response": []
+        },
+        {
+          "name": "Cancelar Assinatura",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "http://localhost:3000/gestao/assinaturas/2/cancelar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["gestao", "assinaturas", "2", "cancelar"]
+            },
+            "description": "Cancela uma assinatura, alterando a data de fim de fidelidade para a data atual"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Serviço de Status de Assinatura",
+      "item": [
+        {
+          "name": "Listar Assinaturas Ativas",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/servico/status-assinatura/status/ativas",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["servico", "status-assinatura", "status", "ativas"]
+            },
+            "description": "Lista todas as assinaturas com status ativo"
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Assinaturas Vencidas",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/servico/status-assinatura/status/vencidas",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["servico", "status-assinatura", "status", "vencidas"]
+            },
+            "description": "Lista todas as assinaturas com status vencido"
+          },
+          "response": []
+        },
+        {
+          "name": "Verificar Status de Assinatura",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/servico/status-assinatura/verificar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["servico", "status-assinatura", "verificar", "1"]
+            },
+            "description": "Verifica o status detalhado de uma assinatura específica"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Serviço de Planos Ativos",
+      "item": [
+        {
+          "name": "Listar Planos Ativos",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/servico/planos-ativos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["servico", "planos-ativos"]
+            },
+            "description": "Lista todos os planos ativos no sistema"
+          },
+          "response": []
+        },
+        {
+          "name": "Planos Ativos do Cliente",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/servico/planos-ativos/cliente/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["servico", "planos-ativos", "cliente", "1"]
+            },
+            "description": "Lista os planos ativos de um cliente específico"
+          },
+          "response": []
+        },
+        {
+          "name": "Status de Fidelidade do Cliente",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/servico/planos-ativos/fidelidade/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["servico", "planos-ativos", "fidelidade", "1"]
+            },
+            "description": "Verifica o status de fidelidade de um cliente específico"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Faturamento - Pagamentos",
+      "item": [
+        {
+          "name": "Registrar Pagamento",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:3000/faturamento/pagamentos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["faturamento", "pagamentos"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"codAss\": 1,\n    \"valorPago\": 99.90\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Registra um novo pagamento para uma assinatura"
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Pagamentos da Assinatura",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/faturamento/pagamentos/assinatura/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["faturamento", "pagamentos", "assinatura", "1"]
+            },
+            "description": "Lista todos os pagamentos de uma assinatura específica"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

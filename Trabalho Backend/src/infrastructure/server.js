@@ -6,6 +6,7 @@ const assinaturaClienteRoutes = require('./routes/assinaturaClienteRoutes');
 const assinaturaPlanoRoutes = require('./routes/assinaturaPlanoRoutes');
 const servicoStatusAssinaturaRoutes = require('./routes/servicoStatusAssinatura');
 const db = require('./database/database');
+const clienteRoutes = require('./routes/clienteRoutes');
 
 // Criar aplicação Express
 const app = express();
@@ -17,7 +18,7 @@ app.use('/gestao/assinaturas', assinaturaRoutes);
 app.use('/gestao/assinaturascliente', assinaturaClienteRoutes);
 app.use('/gestao/assinaturasplano', assinaturaPlanoRoutes);
 app.use('/servico/status-assinatura', servicoStatusAssinaturaRoutes);
-
+app.use('/gestao/clientes', clienteRoutes);
 // Variável para armazenar a instância do servidor
 let server;
 

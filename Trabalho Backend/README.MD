@@ -53,12 +53,6 @@ Este projeto implementa um backend para gerenciar planos de operadoras de intern
 *   [Node.js](https://nodejs.org/en/) (versão 16 ou superior)
 *   [MySQL](https://www.mysql.com/)
 
-### ⬇️ Clonando o Repositório
-
-
-git clone https://github.com/lucaspio1/backend1.git
-cd backend
-
 ### 📦 Instalando Dependências
 
 
@@ -98,24 +92,27 @@ Aqui está uma visão geral dos principais endpoints da API:
 ### 👤 Clientes
 
 *   `GET /gestao/clientes`: Lista todos os clientes.
-*   `POST /gestao/clientes`: Cria um novo cliente.
-
+*   
 ### 🏢 Planos
 
 *   `GET /gestao/planos`: Lista todos os planos.
-*   `POST /gestao/planos`: Cria um novo plano.
-
+*  
 ### 📝 Assinaturas
 
 *   `POST /gestao/assinaturas`: Cria uma nova assinatura.
-*   `GET /gestao/assinaturas`: Lista todas as assinaturas.
-*   `PUT /gestao/assinaturas/:id/renovar`: Renova uma assinatura específica.
-*   `PUT /gestao/assinaturas/:id/cancelar`: Cancela uma assinatura específica.
 
-### 💰 Pagamentos
+*  `PATCH /gestao/planos/{idPlano}`: Atualiza o custo mensal de um plano específico.
 
-*   `POST /faturamento/pagamentos`: Registra um novo pagamento.
-*   `GET /faturamento/pagamentos/assinatura/:assinaturaId`: Lista os pagamentos de uma assinatura específica.
+* `GET /gestao/assinaturas/status/ATIVOS`:Lista assinaturas ativas.
+
+* `GET /gestao/assinaturas/status/TODOS`: Lista todas as assinaturas.
+
+* `GET /gestao/assinaturas/status/CANCELADOS`: Lista assinaturas canceladas.
+
+* `GET /gestao/assinaturascliente/{codcli}` :Lista assinaturas de um cliente específico.
+
+* `GET /gestao/assinaturasplano/{codplano}`: Lista assinaturas de um plano específico.
+
 
 ## ✅ Testes Automatizados
 
@@ -129,6 +126,6 @@ Isso executará os testes unitários e de integração definidos na pasta `tests
 
 ## 📦 Postman Collection
 
-Para facilitar o teste dos endpoints, disponibilizamos uma collection do Postman. Importe o arquivo `template.postman_collection.json` no Postman.
+Para facilitar o teste dos endpoints, disponibilizamos uma collection do Postman. Importe o arquivo `postman.json` no Postman.
 
 

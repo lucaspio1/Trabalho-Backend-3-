@@ -2,7 +2,13 @@
 const express = require('express');
 const Assinatura = require('../../domain/entities/Assinatura');
 const Plano = require('../../domain/entities/Plano');
+const Cliente = require('../../domain/entities/Cliente');
+const { Op } = require('sequelize');
 const router = express.Router();
+
+// Configurar as associações
+Assinatura.belongsTo(Cliente, { foreignKey: 'codCli' });
+Assinatura.belongsTo(Plano, { foreignKey: 'codPlano' });
 
 // Criar uma nova assinatura
 router.post('/', async (req, res) => {
@@ -54,7 +60,56 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Buscar assinatura por ID
+// Rota específica para listar por status - IMPORTANTE: esta rota deve vir ANTES da rota de busca por ID
+router.get('/status/:statusTipo', async (req, res) => {
+    try {
+        const { statusTipo } = req.params;
+        const hoje = new Date();
+        let whereCondition = {};
+        
+        switch (statusTipo.toUpperCase()) {
+            case 'ATIVOS':
+                // Assinaturas com data de fim de fidelidade no futuro
+                whereCondition = {
+                    fimFidelidade: {
+                        [Op.gt]: hoje
+                    }
+                };
+                break;
+            case 'CANCELADOS':
+                // Para este exemplo, consideramos canceladas aquelas com data de fim igual ou anterior à data atual
+                whereCondition = {
+                    fimFidelidade: {
+                        [Op.lte]: hoje
+                    }
+                };
+                break;
+            case 'TODOS':
+                // Sem filtros - retorna todas
+                break;
+            default:
+                return res.status(400).json({ mensagem: 'Status inválido. Use: ATIVOS, CANCELADOS ou TODOS' });
+        }
+        
+        const assinaturas = await Assinatura.findAll({
+            where: whereCondition,
+            include: [
+                { model: Cliente, as: 'Cliente' },
+                { model: Plano, as: 'Plano' }
+            ]
+        });
+        
+        res.json({
+            status: statusTipo,
+            quantidade: assinaturas.length,
+            assinaturas: assinaturas
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Buscar assinatura por ID - IMPORTANTE: esta rota deve vir DEPOIS da rota de status
 router.get('/:id', async (req, res) => {
     try {
         const assinatura = await Assinatura.findByPk(req.params.id);

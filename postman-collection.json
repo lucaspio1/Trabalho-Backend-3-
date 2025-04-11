@@ -138,7 +138,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/gestao/assinaturas/ATIVOS",
+							"raw": "localhost:3000/gestao/assinaturas/status/ATIVOs",
 							"host": [
 								"localhost"
 							],
@@ -171,7 +171,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/gestao/assinaturas/TODOS",
+							"raw": "localhost:3000/gestao/assinaturas/status/TODOS",
 							"host": [
 								"localhost"
 							],
@@ -204,7 +204,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/gestao/assinaturas/CANCELADOS",
+							"raw": "localhost:3000/gestao/assinaturas/status/CANCELADOS",
 							"host": [
 								"localhost"
 							],

@@ -23,7 +23,7 @@ app.use('/gestao/assinaturasplano', assinaturaPlanoRoutes);
 app.use('/servico/status-assinatura', servicoStatusAssinaturaRoutes);
 app.use('/gestao/clientes', clienteRoutes);
 
-// Novas rotas para os microsserviços da Fase 2
+
 app.use('/faturamento', faturamentoRoutes);
 app.use('/planosativos', planosAtivosRoutes);
 

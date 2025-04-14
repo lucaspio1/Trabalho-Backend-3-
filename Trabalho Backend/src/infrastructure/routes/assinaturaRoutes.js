@@ -50,45 +50,36 @@ router.post('/', async (req, res) => {
     }
 });
 
-// Listar todas as assinaturas
+// Listar todas as assinaturas com opção de filtrar por status
 router.get('/', async (req, res) => {
     try {
-        const assinaturas = await Assinatura.findAll();
-        res.json(assinaturas);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-// Rota específica para listar por status - IMPORTANTE: esta rota deve vir ANTES da rota de busca por ID
-router.get('/status/:statusTipo', async (req, res) => {
-    try {
-        const { statusTipo } = req.params;
+        const { status } = req.query;
         const hoje = new Date();
         let whereCondition = {};
+        let statusDescricao = 'TODOS';
         
-        switch (statusTipo.toUpperCase()) {
-            case 'ATIVOS':
-                // Assinaturas com data de fim de fidelidade no futuro
-                whereCondition = {
-                    fimFidelidade: {
-                        [Op.gt]: hoje
-                    }
-                };
-                break;
-            case 'CANCELADOS':
-                // Para este exemplo, consideramos canceladas aquelas com data de fim igual ou anterior à data atual
-                whereCondition = {
-                    fimFidelidade: {
-                        [Op.lte]: hoje
-                    }
-                };
-                break;
-            case 'TODOS':
-                // Sem filtros - retorna todas
-                break;
-            default:
-                return res.status(400).json({ mensagem: 'Status inválido. Use: ATIVOS, CANCELADOS ou TODOS' });
+        if (status) {
+            switch (status.toUpperCase()) {
+                case 'ATIVOS':
+                    // Assinaturas com data de fim de fidelidade no futuro
+                    whereCondition = {
+                        fimFidelidade: {
+                            [Op.gt]: hoje
+                        }
+                    };
+                    statusDescricao = 'ATIVOS';
+                    break;
+                case 'CANCELADOS':
+                    // Para este exemplo, consideramos canceladas aquelas com data de fim igual ou anterior à data atual
+                    whereCondition = {
+                        fimFidelidade: {
+                            [Op.lte]: hoje
+                        }
+                    };
+                    statusDescricao = 'CANCELADOS';
+                    break;
+                // Se status não for reconhecido ou for 'TODOS', não aplica filtro
+            }
         }
         
         const assinaturas = await Assinatura.findAll({
@@ -100,7 +91,7 @@ router.get('/status/:statusTipo', async (req, res) => {
         });
         
         res.json({
-            status: statusTipo,
+            status: statusDescricao,
             quantidade: assinaturas.length,
             assinaturas: assinaturas
         });
@@ -109,7 +100,7 @@ router.get('/status/:statusTipo', async (req, res) => {
     }
 });
 
-// Buscar assinatura por ID - IMPORTANTE: esta rota deve vir DEPOIS da rota de status
+// Buscar assinatura por ID
 router.get('/:id', async (req, res) => {
     try {
         const assinatura = await Assinatura.findByPk(req.params.id);
